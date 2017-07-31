@@ -99,10 +99,31 @@ let formData = [
 
 let formHTML = document.getElementById('fields');
 for (let i = 0; i < formData.length; i++) {
+  if (formData[i].type === 'textarea') {
+    let newinput = document.createElement('textarea');
+    newinput.placeholder = formData[i].label;
+    formHTML.appendChild(newinput);
+  }
+  else if(formData[i].type === 'select'){
+    let newinput = document.createElement('select')
+    let defaultSelect = document.createElement('option')
+    let defaultSelectText = document.createTextNode('Select an Option')
+    defaultSelect.appendChild(defaultSelectText);
+    newinput.appendChild(defaultSelect);
+    for (var o = 0; o < formData[i].options.length; o++) {
+      let newOption = document.createElement('option');
+      let newOptionText = document.createTextNode(formData[i].options[o].label);
+      newOption.appendChild(newOptionText);
+      newinput.appendChild(newOption);
+    }
+    formHTML.appendChild(newinput);
+  }
+  else{
   let input = document.createElement('input');
-  formHTML.appendChild(input);
   input.setAttribute('type', formData[i].type);
   input.setAttribute('id', formData[i].id);
   input.setAttribute('placeholder', formData[i].label);
   input.setAttribute('type', formData[i].type);
-}
+  input.setAttribute('icon', formData[i].icon);
+  formHTML.appendChild(input);
+}}
